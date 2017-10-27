@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Jakob Wulf-Eck</title>
+  </head>
+
+<body id = "body">
+<form action="ViewUserPosts.php" method="post" name ="userForm">
+  <select name = "userBox">
+    <?php
+    $mysqli = new mysqli("mysql.eecs.ku.edu", "jwulfeck", 'P@$$word123', "jwulfeck");
+
+    /* check connection */
+    if ($mysqli->connect_errno) {
+        printf("Connect failed: %s\n", $mysqli->connect_error);
+        exit();
+    }
+
+    $existsQuery = "SELECT user_id FROM Users";
+    if ($existsResult = $mysqli->query($existsQuery)){
+      while ( $row=mysqli_fetch_assoc($existsResult)) {
+        $username = $row["user_id"];
+        echo "<option value='".$username."'>$username</option>";
+      }
+    }
+
+
+
+
+
+     ?>
+  </select>
+  <br>
+  <input type="submit" value = "Look Up User">
+</form>
+</body>
+</html>

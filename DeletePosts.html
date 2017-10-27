@@ -1,0 +1,48 @@
+
+
+
+<html>
+  <head>
+    <title>Jakob Wulf-Eck</title>
+  </head>
+
+<body id = "body">
+<form action="DeletePost.php" method="post" name ="userForm">
+    <?php
+    $mysqli = new mysqli("mysql.eecs.ku.edu", "jwulfeck", 'P@$$word123', "jwulfeck");
+
+    /* check connection */
+    if ($mysqli->connect_errno) {
+        printf("Connect failed: %s\n", $mysqli->connect_error);
+        exit();
+    }
+
+    $html = '<table>';
+    $html .= '<tr>';
+    $html .= '<th>'. "ID" . '</th>';
+    $html .= '<th>'. "Delete?" . '</th>';
+    $html .= '<th>'. "Content" . '</th>';
+    $html .= '<th>'. "Author" . '</th>';
+
+    $html .= '</tr>';
+    $query = "SELECT content, post_id, author_id FROM Posts";
+    if ($result = $mysqli->query($query)){
+      while ( $row=mysqli_fetch_assoc($result)) {
+        $content = $row["content"];
+        $id = $row["post_id"];
+        $author = $row["author_id"];
+        $html.='<tr>'."<th>$id</th>";
+          $html .= '<td><input type="checkbox" name="delete[]" value ='.$id. '/>&nbsp;</td>';
+        $html.="<td>$content</td>";
+        $html.="<td>$author</td>";
+
+      }
+    }
+    echo ($html);
+
+     ?>
+  <br>
+  <input type="submit" value = "Delete">
+</form>
+</body>
+</html>
